@@ -1,6 +1,11 @@
 <?php
 
+use Faker\Provider\ar_EG\Payment;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Frontsite\LandingController;
+use App\Http\Controllers\Frontsite\PaymentController;
+use App\Http\Controllers\Frontsite\AppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,16 +18,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+##route Frontsite##
+Route::resource('/',LandingController::class);
+##end route frontsite##
+
+##route Backsite##
+Route::group(['prefix' => 'backsite', 'as' => 'backsite.', 'middleware' => ['auth:sanctum',
+config('jetstream.authf_session'),
+'verified']], function() {
+
+    // appointment page
+    Route::resource('appointment',AppointmentController::class);
+
+    // payment page
+    Route::resource('payment',PaymentController::class);
+
 });
+##end route Backsite##
+
+
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.authf_session'),
+//     'verified'
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });
