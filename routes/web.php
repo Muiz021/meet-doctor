@@ -18,35 +18,34 @@ use App\Http\Controllers\Frontsite\AppointmentController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 ##route Frontsite##
-Route::resource('/',LandingController::class);
-##end route frontsite##
 
-##route Backsite##
-Route::group(['prefix' => 'backsite', 'as' => 'backsite.', 'middleware' => ['auth:sanctum',
-config('jetstream.authf_session'),
-'verified']], function() {
+// landing page
+Route::resource('/', LandingController::class);
+
+Route::group(['middleware' => [
+    'auth:sanctum',
+    config('jetstream.authf_session'),
+    'verified'
+]], function () {
 
     // appointment page
-    Route::resource('appointment',AppointmentController::class);
+    Route::resource('appointment', AppointmentController::class);
 
     // payment page
-    Route::resource('payment',PaymentController::class);
+    Route::resource('payment', PaymentController::class);
+});
+##end route frontsite##
 
+
+##route Backsite##
+Route::group(['prefix' => 'backsite', 'as' => 'backsite.', 'middleware' => [
+    'auth:sanctum',
+    config('jetstream.authf_session'),
+    'verified'
+]], function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });
 ##end route Backsite##
-
-
-// Route::middleware([
-//     'auth:sanctum',
-//     config('jetstream.authf_session'),
-//     'verified'
-// ])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return view('dashboard');
-//     })->name('dashboard');
-// });
