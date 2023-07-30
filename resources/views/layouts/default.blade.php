@@ -16,6 +16,9 @@
 </head>
 
 <body>
+
+    @include('sweetalert::alert')
+
     {{-- use header --}}
     @include('components.frontsite.header')
     {{-- end use header --}}
@@ -23,10 +26,6 @@
     {{-- content --}}
     @yield('content')
     {{-- end content --}}
-
-    {{-- use footer --}}
-    @include('components.frontsite.footer')
-    {{-- end use footer --}}
 
     {{-- use script --}}
     @stack('before-script')

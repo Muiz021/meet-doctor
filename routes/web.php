@@ -1,11 +1,16 @@
 <?php
 
-use Faker\Provider\ar_EG\Payment;
 use Illuminate\Support\Facades\Route;
 
+// Frontsite
 use App\Http\Controllers\Frontsite\LandingController;
 use App\Http\Controllers\Frontsite\PaymentController;
 use App\Http\Controllers\Frontsite\AppointmentController;
+
+// Backsite
+use App\Http\Controllers\Backsite\DashboardController;
+use App\Http\Controllers\Backsite\SpecialistController;
+use App\Http\Controllers\Backsite\TypeUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +30,6 @@ Route::resource('/', LandingController::class);
 
 Route::group(['middleware' => [
     'auth:sanctum',
-    config('jetstream.authf_session'),
     'verified'
 ]], function () {
 
@@ -41,11 +45,10 @@ Route::group(['middleware' => [
 ##route Backsite##
 Route::group(['prefix' => 'backsite', 'as' => 'backsite.', 'middleware' => [
     'auth:sanctum',
-    config('jetstream.authf_session'),
     'verified'
 ]], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard.index');
+    Route::resource('type_user',TypeUserController::class);
+    Route::resource('specialist',SpecialistController::class);
 });
 ##end route Backsite##

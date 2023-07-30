@@ -14,8 +14,6 @@ class LandingController extends Controller
 {
     public function index()
     {
-        // $contact = Auth::user()->detail_user->contact;
-
         return view('pages.frontsite.landing-page.index');
     }
 }

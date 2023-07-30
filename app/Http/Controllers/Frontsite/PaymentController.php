@@ -18,7 +18,7 @@ class PaymentController extends Controller
 
     public function index()
     {
-        $contact = Auth::user()->detail_user->contact;
+        // $contact = Auth::user()->detail_user->contact;
         return view('pages.frontsite.payment.index');
     }
 }
